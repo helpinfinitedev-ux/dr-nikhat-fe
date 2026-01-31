@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -40,7 +40,7 @@
 
     --heading: 0 0% 10%;
     --text: 0 0% 40%;
-    
+
     --whatsapp: 142 70% 49%;
 
     --sidebar-background: 0 0% 98%;
@@ -164,7 +164,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -221,4 +222,16 @@
   section {
     @apply py-[35px];
   }
+}
+.my-editor img {
+  max-width: 320px !important;
+  height: auto;
+}
+.bn-visual-media {
+  max-width: 620px !important;
+}
+.bn-container {
+  width: 1224px !important;
+  margin: auto;
+  overflow: hidden;
 }

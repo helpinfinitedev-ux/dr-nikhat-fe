@@ -83,8 +83,11 @@ const Header = () => {
             </ul>
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <Link to="/login" className="btn h-14 btn-outline flex items-center gap-2">
+              Login
+            </Link>
             <Link to="/book-appointment" className="btn h-14 btn-primary flex items-center gap-2">
               Book Appointment
             </Link>
@@ -122,9 +125,14 @@ const Header = () => {
                   </li>
                 ))}
               </ul>
-              <Link to="/book-appointment" onClick={() => setIsMenuOpen(false)} className="btn btn-primary w-full text-center mt-6 block">
-                Book Appointment
-              </Link>
+              <div className="flex flex-col gap-3 mt-6">
+                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="btn btn-outline w-full text-center block">
+                  Login
+                </Link>
+                <Link to="/book-appointment" onClick={() => setIsMenuOpen(false)} className="btn btn-primary w-full text-center block">
+                  Book Appointment
+                </Link>
+              </div>
             </div>
           </div>
         </div>

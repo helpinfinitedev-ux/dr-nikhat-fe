@@ -1,91 +1,20 @@
-import { useState } from "react";
-import { Star, Play, SlidersHorizontal, ArrowRight } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Star, Play, SlidersHorizontal, ArrowRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { TestimonialsService } from "@/services/testimonials.service";
 
-const categories = [
-  "All",
-  "Skin Conditions",
-  "Allergies",
-  "Migraines",
-  "Digestive Issues",
-];
-
-const testimonials = [
-  {
-    id: 1,
-    name: "Amelia R.",
-    location: "Austin",
-    condition: "Chronic Eczema",
-    category: "Skin Conditions",
-    rating: 5,
-    testimonial:
-      "My skin has never been clearer. Dr. Nikhat's approach was a game-changer after years of struggling. The before/after slider shows the incredible difference.",
-    hasSlider: true,
-    hasVideo: false,
-  },
-  {
-    id: 2,
-    name: "David L.",
-    location: "San Diego",
-    condition: "Severe Allergies",
-    category: "Allergies",
-    rating: 4.5,
-    testimonial:
-      "I can finally enjoy the outdoors again without constant sneezing. A truly life-changing treatment. Watch my story to see how it happened.",
-    hasSlider: false,
-    hasVideo: true,
-  },
-  {
-    id: 3,
-    name: "Priya K.",
-    location: "New York",
-    condition: "Psoriasis",
-    category: "Skin Conditions",
-    rating: 5,
-    testimonial:
-      "The relief I've found is immense. I was skeptical about homeopathy at first, but the results speak for themselves. The care and attention to detail were amazing.",
-    hasSlider: false,
-    hasVideo: false,
-  },
-  {
-    id: 4,
-    name: "Michael B.",
-    location: "Chicago",
-    condition: "Migraines",
-    category: "Migraines",
-    rating: 5,
-    testimonial:
-      "My headaches are finally manageable. I'm so grateful for the personalized care I received and for getting my life back from chronic pain.",
-    hasSlider: false,
-    hasVideo: false,
-  },
-  {
-    id: 5,
-    name: "Sophia T.",
-    location: "Miami",
-    condition: "Hormonal Imbalance",
-    category: "Allergies",
-    rating: 4.5,
-    testimonial:
-      "I feel more balanced and energetic than I have in years. Dr. Nikhat really listens and understands, and the treatment plan felt tailor-made for me.",
-    hasSlider: false,
-    hasVideo: false,
-  },
-  {
-    id: 6,
-    name: "Liam G.",
-    location: "Seattle",
-    condition: "Digestive Issues",
-    category: "Digestive Issues",
-    rating: 5,
-    testimonial:
-      "After years of discomfort, I've found a solution that works. My quality of life has improved dramatically. I highly recommend her practice.",
-    hasSlider: false,
-    hasVideo: false,
-  },
-];
+type CustomerRating = {
+  _id?: string;
+  customerName: string;
+  rating: number;
+  description: string;
+  treatment: string;
+  links?: string[];
+  imageUrls?: string[];
+  createdAt?: string;
+};
 
 const StarRating = ({ rating }: { rating: number }) => {
   return (
@@ -109,33 +38,47 @@ const StarRating = ({ rating }: { rating: number }) => {
 const TestimonialCard = ({
   testimonial,
 }: {
-  testimonial: (typeof testimonials)[0];
+  testimonial: CustomerRating;
 }) => {
+  const hasSlider = (testimonial.imageUrls || []).length > 0;
+  const hasVideo = (testimonial.links || []).length > 0;
+  const firstLink = (testimonial.links || [])[0];
+
   return (
     <div className="bg-card rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-500 border border-border/50 flex flex-col h-full">
       {/* Header with avatar and info */}
       <div className="flex items-start gap-4 mb-4">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-lg flex-shrink-0">
-          {testimonial.name.charAt(0)}
+          {testimonial.customerName?.charAt(0) || "U"}
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-heading truncate">
-            {testimonial.name}, {testimonial.location}
+            {testimonial.customerName}
           </h3>
           <p className="text-sm text-primary font-medium">
-            Treated for: {testimonial.condition}
+            Treated for: {testimonial.treatment}
           </p>
         </div>
-        {testimonial.hasSlider && (
+        {hasSlider && (
           <button className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors">
             <SlidersHorizontal className="w-4 h-4 text-text" />
           </button>
         )}
-        {testimonial.hasVideo && (
-          <button className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors">
-            <Play className="w-4 h-4 text-primary fill-primary" />
-          </button>
-        )}
+        {hasVideo &&
+          (firstLink ? (
+            <a
+              href={firstLink}
+              target="_blank"
+              rel="noreferrer"
+              className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors"
+            >
+              <Play className="w-4 h-4 text-primary fill-primary" />
+            </a>
+          ) : (
+            <button className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors">
+              <Play className="w-4 h-4 text-primary fill-primary" />
+            </button>
+          ))}
       </div>
 
       {/* Rating */}
@@ -144,18 +87,42 @@ const TestimonialCard = ({
       </div>
 
       {/* Testimonial text */}
-      <p className="text-text leading-relaxed flex-1">"{testimonial.testimonial}"</p>
+      <p className="text-text leading-relaxed flex-1">"{testimonial.description}"</p>
     </div>
   );
 };
 
 const TestimonialsPage = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [testimonials, setTestimonials] = useState<CustomerRating[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      setLoading(true);
+      const [response, error] = await TestimonialsService.getTestimonials();
+      if (error) {
+        console.error("Error fetching testimonials:", error);
+        setTestimonials([]);
+      } else {
+        setTestimonials((response?.data?.data as CustomerRating[]) || []);
+      }
+      setLoading(false);
+    };
+    fetchTestimonials();
+  }, []);
+
+  const categories = useMemo(() => {
+    const treatments = testimonials
+      .map((testimonial) => testimonial.treatment)
+      .filter((treatment) => !!treatment);
+    return ["All", ...Array.from(new Set(treatments))];
+  }, [testimonials]);
 
   const filteredTestimonials =
     activeCategory === "All"
       ? testimonials
-      : testimonials.filter((t) => t.category === activeCategory);
+      : testimonials.filter((t) => t.treatment === activeCategory);
 
   return (
     <>
@@ -201,17 +168,27 @@ const TestimonialsPage = () => {
         {/* Testimonials Grid */}
         <section className="py-16 lg:py-20">
           <div className="container">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredTestimonials.map((testimonial, index) => (
-                <div
-                  key={testimonial.id}
-                  className="animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <TestimonialCard testimonial={testimonial} />
-                </div>
-              ))}
-            </div>
+            {loading ? (
+              <div className="flex items-center justify-center py-16">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              </div>
+            ) : filteredTestimonials.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-text text-lg">No testimonials found.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredTestimonials.map((testimonial, index) => (
+                  <div
+                    key={testimonial._id || `${testimonial.customerName}-${index}`}
+                    className="animate-fade-in"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <TestimonialCard testimonial={testimonial} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 

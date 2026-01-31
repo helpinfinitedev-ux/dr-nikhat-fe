@@ -5,12 +5,30 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { toast } from "sonner";
+import { ProductsService } from "@/services/products.service";
 
-const categories = ["All", "Hair Care", "Skin Care", "Digestive", "Immunity", "Mental Wellness", "Pain Relief", "Kids Health", "Women's Health"];
+export const categories = [
+  {
+    label: "All",
+    value: "all",
+  },
+  {
+    label: "Hair Care",
+    value: "hair-care",
+  },
+  {
+    label: "Skin Care",
+    value: "skin-care",
+  },
+  {
+    label: "Digestive",
+    value: "digestive",
+  },
+];
 
 const ProductsPage = () => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [products, setProducts] = useState<any>([]);
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -24,9 +42,24 @@ const ProductsPage = () => {
 
   const loadProducts = async () => {
     setLoading(true);
-
-    setProducts([]);
-    setLoading(false);
+    try {
+      const [response, error] = await ProductsService.getProducts();
+      const payload = Array.isArray(response.data) ? response.data : response.data?.data;
+      const normalized = (payload || []).map((product: any) => ({
+        ...product,
+        id: product.id || product._id,
+        imageUrl: product.imageUrls?.[0] || product.image_url || "",
+        inStock: product.in_stock ?? true,
+      }));
+      console.log(normalized);
+      setProducts(normalized);
+    } catch (error) {
+      console.error("Error loading products:", error);
+      toast.error("Failed to load products");
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const loadCart = async () => {
@@ -35,7 +68,7 @@ const ProductsPage = () => {
     setCartLoading(false);
   };
 
-  const filteredProducts = selectedCategory === "All" ? products : products.filter((p) => p.category === selectedCategory);
+  const filteredProducts = selectedCategory === "all" ? products : products.filter((p: any) => p.category === selectedCategory);
 
   const handleAddToCart = async (product: any) => {
     console.log(product);
@@ -145,62 +178,77 @@ const ProductsPage = () => {
           <div className="flex flex-wrap gap-3 justify-center mb-12">
             {categories.map((category) => (
               <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
+                key={category.value}
+                onClick={() => setSelectedCategory(category.value)}
                 className={`px-5 py-2 rounded-full font-medium transition-all duration-300 ${
-                  selectedCategory === category ? "bg-primaryColor text-white shadow-lg" : "bg-gray-100 text-textColor hover:bg-primaryLightColor hover:text-primaryColor"
+                  selectedCategory === category.value ? "bg-primaryColor text-white shadow-lg" : "bg-gray-100 text-textColor hover:bg-primaryLightColor hover:text-primaryColor"
                 }`}>
-                {category}
+                {category.label}
               </button>
             ))}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                <Link to={`/products/${product.id}`} className="block">
-                  <div className="relative">
-                    <img src={product.image_url} alt={product.name} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
-                    {product.badge && <span className="absolute top-3 left-3 bg-secondaryColor text-white text-xs font-semibold px-3 py-1 rounded-full">{product.badge}</span>}
-                    {!product.in_stock && (
-                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                        <span className="bg-white text-headingColor font-semibold px-4 py-2 rounded-full">Out of Stock</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-5">
-                    <span className="text-xs font-medium text-primaryColor bg-primaryLightColor px-2 py-1 rounded">{product.category}</span>
-                    <h3 className="font-bold text-headingColor mt-3 mb-2 line-clamp-1">{product.name}</h3>
-                    <p className="text-sm text-textColor mb-3 line-clamp-2">{product.description}</p>
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">{product.rating}</span>
-                      </div>
-                      <span className="text-sm text-textColor">({product.reviews_count} reviews)</span>
+            {filteredProducts.map((product: any) => {
+              const imageUrl = product.imageUrl || product.imageUrls?.[0] || "";
+              const originalPrice = product.original_price ?? product.price;
+              const showOriginal = Number(product.offer) > 0 && originalPrice;
+              const displayPrice = product.discountedPrice ?? product.price;
+              const hasRating = typeof product.rating === "number";
+              const reviewsCount = product.reviews_count ?? 0;
+
+              return (
+                <div key={product.id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                  <Link to={`/products/${product.id}`} className="block">
+                    <div className="relative">
+                      {imageUrl ? (
+                        <img src={imageUrl} alt={product.name} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+                      ) : (
+                        <div className="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400">No image</div>
+                      )}
+                      {product.badge && <span className="absolute top-3 left-3 bg-secondaryColor text-white text-xs font-semibold px-3 py-1 rounded-full">{product.badge}</span>}
+                      {!product.inStock && (
+                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                          <span className="bg-white text-headingColor font-semibold px-4 py-2 rounded-full">Out of Stock</span>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl font-bold text-primaryColor">₹{product.price}</span>
-                      {product.original_price && <span className="text-sm text-textColor line-through">₹{product.original_price}</span>}
+                    <div className="p-5">
+                      <span className="text-xs font-medium text-primaryColor bg-primaryLightColor px-2 py-1 rounded">{product.category}</span>
+                      <h3 className="font-bold text-headingColor mt-3 mb-2 line-clamp-1">{product.name}</h3>
+                      <p className="text-sm text-textColor mb-3 line-clamp-2">{product.description}</p>
+                      {hasRating && (
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="flex items-center gap-1">
+                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            <span className="text-sm font-medium">{product.rating}</span>
+                          </div>
+                          <span className="text-sm text-textColor">({reviewsCount} reviews)</span>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl font-bold text-primaryColor">₹{displayPrice}</span>
+                        {showOriginal && <span className="text-sm text-textColor line-through">₹{originalPrice}</span>}
+                      </div>
                     </div>
+                  </Link>
+                  <div className="px-5 pb-5">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // product.in_stock && handleAddToCart(product);
+                      }}
+                      disabled={!product.inStock}
+                      className={`w-full py-2 rounded-full font-medium transition-all duration-300 flex items-center justify-center gap-2 ${
+                        product.inStock ? "bg-primaryColor text-white hover:bg-primaryDarkColor" : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                      }`}>
+                      <Plus className="w-4 h-4" />
+                      Add to Cart
+                    </button>
                   </div>
-                </Link>
-                <div className="px-5 pb-5">
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      // product.in_stock && handleAddToCart(product);
-                    }}
-                    disabled={!product.in_stock}
-                    className={`w-full py-2 rounded-full font-medium transition-all duration-300 flex items-center justify-center gap-2 ${
-                      product.in_stock ? "bg-primaryColor text-white hover:bg-primaryDarkColor" : "bg-gray-200 text-gray-400 cursor-not-allowed"
-                    }`}>
-                    <Plus className="w-4 h-4" />
-                    Add to Cart
-                  </button>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {filteredProducts.length === 0 && (

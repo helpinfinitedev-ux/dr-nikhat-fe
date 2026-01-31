@@ -14,6 +14,9 @@ import BlogPage from "./pages/BlogPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import TrackOrderPage from "./pages/TrackOrderPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import BlogDetailPage from "./pages/BlogDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +28,8 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/testimonials" element={<TestimonialsPage />} />
           <Route path="/book-appointment" element={<BookAppointment />} />
           <Route path="/products" element={<ProductsPage />} />
@@ -34,6 +39,7 @@ const App = () => (
           <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
           <Route path="/track-order/:orderNumber?" element={<TrackOrderPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogDetailPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

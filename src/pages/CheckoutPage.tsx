@@ -40,17 +40,18 @@ const CheckoutPage = () => {
 
   const loadCart = async () => {
     setLoading(true);
-    const { data, error } = await getCart();
+    // const { data, error } = await getCart();
+    const error = "";
     if (error) {
       toast.error("Failed to load cart");
       console.error(error);
     } else {
-      setCartItems(data || []);
+      setCartItems([]);
     }
     setLoading(false);
   };
 
-  const subtotal = calculateCartTotal(cartItems);
+  const subtotal = 100;
   const shippingFee = subtotal >= 500 ? 0 : 50;
   const total = subtotal + shippingFee;
 
@@ -83,9 +84,6 @@ const CheckoutPage = () => {
         unit_price: item.product.price,
         total_price: item.product.price * item.quantity,
       }));
-
-      await clearCart();
-
       const message =
         `🎉 New Order Received!\n\n` +
         `📦 Order #: ${orderNumber}\n` +

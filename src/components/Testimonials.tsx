@@ -1,51 +1,37 @@
+import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 import TestimonialCard from "./TestimonialCard";
+import { TestimonialsService } from "@/services/testimonials.service";
 
-const testimonials = [
-  {
-    name: "Priya Sharma",
-    location: "Mumbai, India",
-    condition: "Hair Fall",
-    testimonial: "After struggling with severe hair fall for 3 years, Dr. Nikhat's treatment gave me my confidence back. Within 4 months, I saw remarkable regrowth. The holistic approach really works!",
-    rating: 5,
-  },
-  {
-    name: "Rahul Verma",
-    location: "Delhi, India",
-    condition: "Psoriasis",
-    testimonial: "I had psoriasis for 8 years. Tried everything from steroids to expensive treatments. Dr. Nikhat's homeopathic treatment cleared 90% of my patches in just 6 months. Life-changing!",
-    rating: 5,
-  },
-  {
-    name: "Anjali Patel",
-    location: "Ahmedabad, India",
-    condition: "Kidney Stones",
-    testimonial: "Was advised surgery for 12mm kidney stones. Dr. Nikhat's treatment dissolved them naturally in 5 months. Saved me from surgery and its complications. Highly recommended!",
-    rating: 5,
-  },
-  {
-    name: "Mohammad Khan",
-    location: "Hyderabad, India",
-    condition: "Chronic Acne",
-    testimonial: "Suffered from cystic acne since teenage. Dr. Nikhat not only treated the acne but also addressed the hormonal imbalance causing it. Clear skin after 15 years!",
-    rating: 5,
-  },
-  {
-    name: "Sneha Reddy",
-    location: "Bangalore, India",
-    condition: "Piles",
-    testimonial: "Grade 3 piles without surgery! I was skeptical at first, but the treatment worked wonders. No more pain, no more bleeding. Dr. Nikhat is truly gifted.",
-    rating: 5,
-  },
-  {
-    name: "Vikram Singh",
-    location: "Jaipur, India",
-    condition: "Hair Regrowth",
-    testimonial: "Male pattern baldness ran in my family. Dr. Nikhat's personalized treatment stopped my hair loss and I've seen visible regrowth. The WhatsApp follow-ups are so convenient!",
-    rating: 5,
-  },
-];
+type CustomerRating = {
+  _id?: string;
+  customerName: string;
+  rating: number;
+  description: string;
+  treatment: string;
+  links?: string[];
+  imageUrls?: string[];
+};
 
 const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState<CustomerRating[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      setLoading(true);
+      const [response, error] = await TestimonialsService.getTestimonials();
+      if (error) {
+        console.error("Error fetching testimonials:", error);
+        setTestimonials([]);
+      } else {
+        setTestimonials((response?.data?.data as CustomerRating[]) || []);
+      }
+      setLoading(false);
+    };
+    fetchTestimonials();
+  }, []);
+
   return (
     <section id="testimonials" className="py-20 lg:py-28 bg-muted/30">
       <div className="container">
@@ -63,17 +49,33 @@ const Testimonials = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <TestimonialCard {...testimonial} />
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : testimonials.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-text text-lg">No testimonials available yet.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={testimonial._id || `${testimonial.customerName}-${index}`}
+                className="animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <TestimonialCard
+                  name={testimonial.customerName}
+                  location="India"
+                  condition={testimonial.treatment}
+                  testimonial={testimonial.description}
+                  rating={testimonial.rating}
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
