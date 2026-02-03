@@ -46,20 +46,13 @@ const Treatments = () => {
           <h2 className="heading mb-4">
             Expert <span className="text-primary">Treatment</span> Areas
           </h2>
-          <p className="text__para">
-            Comprehensive homeopathic care for a wide range of health conditions. 
-            Natural, safe, and effective treatments tailored to your unique needs.
-          </p>
+          <p className="text__para">Comprehensive homeopathic care for a wide range of health conditions. Natural, safe, and effective treatments tailored to your unique needs.</p>
         </div>
 
         {/* Treatment Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {treatments.map((treatment, index) => (
-            <div
-              key={index}
-              className="animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
+            <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
               <TreatmentCard {...treatment} />
             </div>
           ))}
@@ -67,12 +60,7 @@ const Treatments = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <a
-            href="https://wa.me/919876543210"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary inline-flex items-center gap-2"
-          >
+          <a href="https://wa.me/7021804152" target="_blank" rel="noopener noreferrer" className="btn btn-primary inline-flex items-center gap-2">
             Consult Now - It's Free!
           </a>
         </div>

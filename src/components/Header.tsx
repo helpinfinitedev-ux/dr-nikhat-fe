@@ -133,10 +133,13 @@ const Header = () => {
               ))}
             </ul>
             <div className="flex flex-col gap-3 mt-6">
-              <Link to="/login" onClick={() => setIsMenuOpen(false)} className="btn btn-outline w-full text-center block">
+              <Link to="/login" onClick={() => setIsMenuOpen(false)} className="h-14 border-primary bg-primary text-gray-50 flex items-center justify-center rounded-[48px] w-full text-center block">
                 Login
               </Link>
-              <Link to="/book-appointment" onClick={() => setIsMenuOpen(false)} className="btn btn-primary w-full text-center block">
+              <Link
+                to="/book-appointment"
+                onClick={() => setIsMenuOpen(false)}
+                className=" w-full h-14 border-primary border-solid border-[1px] rounded-[48px] flex items-center justify-center text-center">
                 Book Appointment
               </Link>
             </div>

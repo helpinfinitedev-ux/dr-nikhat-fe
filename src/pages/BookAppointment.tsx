@@ -23,7 +23,7 @@ const BookAppointment = () => {
       `🌿 New Appointment Request\n\n` + `👤 Name: ${formData.name}\n` + `📱 Phone: ${formData.phone}\n` + `🌿 Symptom: ${formData.symptom}\n` + `⏰ Preferred Time: ${formData.timeSlot}`
     );
 
-    window.open(`https://wa.me/919876543210?text=${message}`, "_blank");
+    window.open(`https://wa.me/7021804152?text=${message}`, "_blank");
     setIsModalOpen(false);
     setFormData({ name: "", phone: "", symptom: "", timeSlot: "" });
   };

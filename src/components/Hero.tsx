@@ -1,4 +1,4 @@
-import { ArrowRight, Play, Users, Award, BookOpen } from "lucide-react";
+import { ArrowRight, Play, Users, Award, BookOpen, Instagram } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -14,15 +14,13 @@ const Hero = () => {
             </div>
 
             <h1 className="heading mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-              Natural Healing with{" "}
-              <span className="text-primary">Homeopathy</span>
+              Natural Healing with <span className="text-primary">Homeopathy</span>
               <br />
               <span className="text-secondary">Dr. Nikhat Chaudhary</span>
             </h1>
 
             <p className="text__para max-w-xl mx-auto lg:mx-0 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-              Experience the power of holistic medicine. Specialized treatments for Hair, Skin, 
-              and Surgical cases with proven results. Your journey to complete wellness starts here.
+              Experience the power of holistic medicine. Specialized treatments for Hair, Skin, and Surgical cases with proven results. Your journey to complete wellness starts here.
             </p>
 
             {/* Social Proof */}
@@ -58,21 +56,18 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mt-10 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-              <a
-                href="https://wa.me/919876543210"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary flex items-center gap-2 group"
-              >
+              <a href="https://wa.me/7021804152" target="_blank" rel="noopener noreferrer" className="btn btn-primary flex items-center gap-2 group">
                 Book Free Consultation
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
-              <button className="flex items-center gap-3 text-heading font-semibold hover:text-primary transition-colors group">
-                <span className="w-12 h-12 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-primary/30">
-                  <Play className="w-5 h-5 text-primary-foreground ml-1" />
-                </span>
-                Watch Success Stories
-              </button>
+              <a href="https://www.instagram.com/dr.nikhatchaudhary" target="_blank" rel="noopener noreferrer" className="">
+                <button className="flex items-center gap-3 text-heading font-semibold hover:text-primary transition-colors group">
+                  <span className="w-12 h-12 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-primary/30">
+                    <Instagram className="w-5 h-5 text-primary-foreground" />
+                  </span>
+                  Watch Success Stories
+                </button>
+              </a>
             </div>
           </div>
 
@@ -82,15 +77,15 @@ const Hero = () => {
               {/* Background decorations */}
               <div className="absolute -top-8 -left-8 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
               <div className="absolute -bottom-8 -right-8 w-72 h-72 bg-secondary/10 rounded-full blur-3xl"></div>
-              
+
               {/* Main image container */}
               <div className="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl">
                 <div className="aspect-[4/5] bg-gradient-to-br from-primary-light to-secondary/20 flex items-end justify-center">
                   {/* Placeholder for doctor image */}
                   <div className="w-full h-full bg-gradient-to-t from-primary/20 to-transparent flex items-center justify-center">
                     <div className="text-center p-8">
-                      <div className="w-40 h-40 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
-                        <span className="text-6xl">👩‍⚕️</span>
+                      <div className="w-40 h-40 md:w-80 md:h-80 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
+                        <img src="/nikhat.png" className="object-cover rounded-full w-40 h-40 md:w-80 md:h-80" />
                       </div>
                       <p className="text-primary font-semibold text-lg">Dr. Nikhat Chaudhary</p>
                       <p className="text-text text-sm">BHMS, MD (Homeopathy)</p>
@@ -100,7 +95,7 @@ const Hero = () => {
               </div>
 
               {/* Floating cards */}
-              <div className="absolute -left-4 top-1/4 bg-background rounded-xl shadow-card p-4 animate-bounce-gentle z-20">
+              <div className="hidden md:block absolute -left-4 top-1/4 bg-background rounded-xl shadow-card p-4 animate-bounce-gentle z-20">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full bg-whatsapp/10 flex items-center justify-center">
                     <span className="text-2xl">✅</span>
@@ -112,7 +107,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="absolute -right-4 bottom-1/4 bg-background rounded-xl shadow-card p-4 animate-bounce-gentle z-20" style={{ animationDelay: "0.5s" }}>
+              <div className="hidden md:block absolute -right-4 bottom-1/4 bg-background rounded-xl shadow-card p-4 animate-bounce-gentle z-20" style={{ animationDelay: "0.5s" }}>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center">
                     <span className="text-2xl">⭐</span>

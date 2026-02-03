@@ -96,7 +96,7 @@ const CheckoutPage = () => {
         `💳 Payment: ${formData.paymentMethod === "cod" ? "Cash on Delivery" : "Online Payment"}\n\n` +
         `${formData.notes ? `📝 Notes: ${formData.notes}` : ""}`;
 
-      window.open(`https://wa.me/919876543210?text=${encodeURIComponent(message)}`, "_blank");
+      window.open(`https://wa.me/7021804152?text=${encodeURIComponent(message)}`, "_blank");
 
       toast.success("Order placed successfully!");
       navigate(`/order-confirmation/${"id"}`);
