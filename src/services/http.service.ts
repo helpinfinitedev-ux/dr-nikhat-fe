@@ -5,8 +5,6 @@ const { CancelToken } = axios;
 
 let source = CancelToken.source();
 
-console.log(import.meta.env.VITE_APP_API_URL);
-
 axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL || "http://localhost:5001";
 
 axios.interceptors.request.use(
