@@ -79,7 +79,7 @@ const RegisterForm = ({ embedded = false, onSuccess }: RegisterFormProps) => {
   };
   return (
     <>
-      {!embedded && <Header />}
+      {/* {!embedded && <Header />} */}
       <section className={embedded ? "py-0" : "py-12 md:py-20"}>
         <div className="container mx-auto px-4">
           <div className="max-w-md mx-auto">
