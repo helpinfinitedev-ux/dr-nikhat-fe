@@ -22,8 +22,6 @@ axios.interceptors.response.use(
     const { message: msg, response } = err;
     const message = response?.data?.message;
 
-    toast.error(message || msg || "Operation failed");
-
     if (!response) throw err;
 
     const code = response.data.statusCode;
