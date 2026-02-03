@@ -98,6 +98,7 @@ const ConfirmOrderModal: React.FC<ConfirmOrderModalProps> = ({ isOpen, onClose, 
 
       const [response, error] = await OrderService.createOrder(orderData as any);
       await CartService.clearCart();
+
       if (error) {
         toast.error("Failed to create order");
         console.error(error);
