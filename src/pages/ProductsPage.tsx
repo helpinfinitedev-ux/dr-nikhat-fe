@@ -58,6 +58,7 @@ const ProductsPage = () => {
         ...product,
         id: product.id || product._id,
         imageUrl: product.imageUrls?.[0] || product.image_url || "",
+        inStock: true,
       }));
       console.log(normalized);
       setProducts(normalized);
