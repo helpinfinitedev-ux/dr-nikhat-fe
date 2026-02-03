@@ -47,7 +47,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex items-center h-20 leading-[80px] bg-background/95 backdrop-blur-sm transition-all duration-300" ref={headerRef}>
+    <header className="flex items-center h-20 leading-[80px] bg-background/95 backdrop-blur-sm transition-all duration-300 z-50 relative" ref={headerRef}>
       <div className="container">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -109,7 +109,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
       </div>
-      <div className={`md:hidden h-full  fixed top-0 right-0 bg-white backdrop-blur-sm transition-opacity duration-300 z-40 `} onClick={toggleMenu}>
+      <div className={`md:hidden h-full fixed top-0 right-0 bg-white backdrop-blur-sm transition-opacity duration-300 z-[60]`} onClick={toggleMenu}>
         <div
           className={`absolute z-[100] h-screen top-0 right-0 w-[280px] bg-white shadow-xl transform transition-transform duration-300 ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
           onClick={(e) => e.stopPropagation()}>
