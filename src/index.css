@@ -104,10 +104,6 @@
 }
 
 @layer components {
-  .container {
-    @apply max-w-[1440px] w-full px-5 mx-auto;
-  }
-
   .btn {
     @apply py-[15px] px-[35px] rounded-[50px] font-semibold transition-all duration-300 ease-in-out;
   }

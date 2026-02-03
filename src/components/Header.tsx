@@ -108,39 +108,37 @@ const Header = () => {
         </div>
 
         {/* Mobile Navigation */}
+      </div>
+      <div className={`md:hidden h-full  fixed inset-0 bg-white backdrop-blur-sm transition-opacity duration-300 z-40 `} onClick={toggleMenu}>
         <div
-          className={`md:hidden fixed inset-0 bg-foreground/50 backdrop-blur-sm transition-opacity duration-300 z-40 ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
-          onClick={toggleMenu}>
-          <div
-            className={`absolute top-0 right-0 w-[280px] h-full bg-background shadow-xl transform transition-transform duration-300 ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
-            onClick={(e) => e.stopPropagation()}>
-            <div className="pt-20 px-6">
-              <ul className="flex flex-col gap-4">
-                {navLinks.map((link, index) => (
-                  <li key={index}>
-                    {link.isRoute ? (
-                      <Link to={link.path} onClick={() => setIsMenuOpen(false)} className="block py-3 text-lg text-text font-medium hover:text-primary transition-colors border-b border-border">
-                        {link.display}
-                      </Link>
-                    ) : (
-                      <a
-                        href={link.path}
-                        onClick={(e) => handleNavClick(e, link.path, link.isRoute)}
-                        className="block py-3 text-lg text-text font-medium hover:text-primary transition-colors border-b border-border">
-                        {link.display}
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex flex-col gap-3 mt-6">
-                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="btn btn-outline w-full text-center block">
-                  Login
-                </Link>
-                <Link to="/book-appointment" onClick={() => setIsMenuOpen(false)} className="btn btn-primary w-full text-center block">
-                  Book Appointment
-                </Link>
-              </div>
+          className={`absolute z-[100] h-screen top-0 right-0 w-[280px] bg-white shadow-xl transform transition-transform duration-300 ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+          onClick={(e) => e.stopPropagation()}>
+          <div className="pt-20 px-6 bg-white">
+            <ul className="flex flex-col gap-4 bg-white">
+              {navLinks.map((link, index) => (
+                <li key={index} className="bg-white">
+                  {link.isRoute ? (
+                    <Link to={link.path} onClick={() => setIsMenuOpen(false)} className="block py-3 text-lg text-text font-medium hover:text-primary transition-colors border-b border-border">
+                      {link.display}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.path}
+                      onClick={(e) => handleNavClick(e, link.path, link.isRoute)}
+                      className="block py-3 text-lg text-text font-medium hover:text-primary transition-colors border-b border-border">
+                      {link.display}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <div className="flex flex-col gap-3 mt-6">
+              <Link to="/login" onClick={() => setIsMenuOpen(false)} className="btn btn-outline w-full text-center block">
+                Login
+              </Link>
+              <Link to="/book-appointment" onClick={() => setIsMenuOpen(false)} className="btn btn-primary w-full text-center block">
+                Book Appointment
+              </Link>
             </div>
           </div>
         </div>

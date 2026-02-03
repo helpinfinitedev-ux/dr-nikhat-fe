@@ -71,12 +71,12 @@ const Testimonials = () => {
         )}
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
+        {/* <div className="text-center mt-16">
           <p className="text-text mb-4">Ready to start your healing journey?</p>
           <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="btn btn-primary inline-flex items-center gap-2">
             Share Your Story
           </a>
-        </div>
+        </div> */}
       </div>
     </section>
   );
