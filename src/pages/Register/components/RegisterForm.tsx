@@ -225,7 +225,7 @@ const RegisterForm = ({ embedded = false, onSuccess }: RegisterFormProps) => {
           </div>
         </div>
       </section>
-      {!embedded && <Footer />}
+      {/* {!embedded && <Footer />} */}
     </>
   );
 };
