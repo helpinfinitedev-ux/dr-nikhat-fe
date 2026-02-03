@@ -102,7 +102,7 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden z-50 p-2 rounded-lg hover:bg-muted transition-colors" onClick={toggleMenu} aria-label="Toggle menu">
+          <button className="md:hidden z-[99999] p-2 rounded-lg hover:bg-muted transition-colors" onClick={toggleMenu} aria-label="Toggle menu">
             {isMenuOpen ? <X className="w-6 h-6 text-heading" /> : <Menu className="w-6 h-6 text-heading" />}
           </button>
         </div>
