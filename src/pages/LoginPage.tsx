@@ -52,7 +52,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      {/* <Header /> */}
 
       <section className="py-12 md:py-20">
         <div className="container mx-auto px-4">
