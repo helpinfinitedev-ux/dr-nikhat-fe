@@ -1,6 +1,7 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Leaf } from "lucide-react";
+import UserContext from "@/context/User/UserContext";
 
 const navLinks = [
   { path: "/", display: "Home", isRoute: true },
@@ -9,12 +10,13 @@ const navLinks = [
   { path: "/products", display: "Products", isRoute: true },
   { path: "/blog", display: "Blog", isRoute: true },
   { path: "/testimonials", display: "Testimonials", isRoute: true },
-  { path: "/book-appointment", display: "Contact", isRoute: true },
+  // { path: "/book-appointment", display: "Contact", isRoute: true },
 ];
 
 const Header = () => {
   const headerRef = useRef<HTMLElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,8 +52,8 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <Leaf className="w-6 h-6 text-primary-foreground" />
+            <div className="w-12 h-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <img src="/logo.png" alt="logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-xl font-bold text-heading">Dr. Nikhat</span>
@@ -85,9 +87,15 @@ const Header = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/login" className="btn h-14 btn-outline flex items-center gap-2">
-              Login
-            </Link>
+            {!user ? (
+              <Link to="/login" className="btn h-14 btn-outline flex items-center gap-2">
+                Login
+              </Link>
+            ) : (
+              <Link to="/logout" className="btn h-14 btn-outline flex items-center gap-2">
+                Logout
+              </Link>
+            )}
             <Link to="/book-appointment" className="btn h-14 btn-primary flex items-center gap-2">
               Book Appointment
             </Link>

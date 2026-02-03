@@ -231,7 +231,9 @@
   max-width: 620px !important;
 }
 .bn-container {
-  width: 1224px !important;
+  width: 720px !important;
   margin: auto;
   overflow: hidden;
+  font-family: "Manrope", sans-serif !important;
+  letter-spacing: 0.25px !important;
 }

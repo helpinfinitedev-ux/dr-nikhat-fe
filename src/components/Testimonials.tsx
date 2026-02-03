@@ -39,13 +39,9 @@ const Testimonials = () => {
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="section__title">Patient Stories</span>
           <h2 className="heading mb-4">
-            Real <span className="text-primary">Transformations</span>,{" "}
-            <span className="text-secondary">Real Results</span>
+            Real <span className="text-primary">Transformations</span>, <span className="text-secondary">Real Results</span>
           </h2>
-          <p className="text__para">
-            Don't just take our word for it. Hear from patients whose lives have been 
-            transformed through natural homeopathic healing.
-          </p>
+          <p className="text__para">Don't just take our word for it. Hear from patients whose lives have been transformed through natural homeopathic healing.</p>
         </div>
 
         {/* Testimonials Grid */}
@@ -60,17 +56,14 @@ const Testimonials = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
-              <div
-                key={testimonial._id || `${testimonial.customerName}-${index}`}
-                className="animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
+              <div key={testimonial._id || `${testimonial.customerName}-${index}`} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
                 <TestimonialCard
                   name={testimonial.customerName}
                   location="India"
                   condition={testimonial.treatment}
                   testimonial={testimonial.description}
                   rating={testimonial.rating}
+                  links={testimonial.links}
                 />
               </div>
             ))}
@@ -80,12 +73,7 @@ const Testimonials = () => {
         {/* Bottom CTA */}
         <div className="text-center mt-16">
           <p className="text-text mb-4">Ready to start your healing journey?</p>
-          <a
-            href="https://wa.me/919876543210"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary inline-flex items-center gap-2"
-          >
+          <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="btn btn-primary inline-flex items-center gap-2">
             Share Your Story
           </a>
         </div>

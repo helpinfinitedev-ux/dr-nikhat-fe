@@ -52,14 +52,7 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
 
   return (
     <div>
-      <BlockNoteView
-        className="min-h-[60vh] max-h-[80vh] w-full overflow-scroll"
-        style={{ minHeight: "calc(70vh-300px)" }}
-        editable={editable || false}
-        onChange={onEditorChange}
-        editor={editor}
-        theme={"light"}
-      />
+      <BlockNoteView className="w-full" style={{ minHeight: "calc(70vh-300px)" }} editable={editable || false} onChange={onEditorChange} editor={editor} theme={"light"} />
     </div>
   );
 };

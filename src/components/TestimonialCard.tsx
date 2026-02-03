@@ -1,4 +1,4 @@
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, Play } from "lucide-react";
 
 interface TestimonialCardProps {
   name: string;
@@ -7,15 +7,12 @@ interface TestimonialCardProps {
   testimonial: string;
   rating: number;
   image?: string;
+  links?: string[];
 }
 
-const TestimonialCard = ({
-  name,
-  location,
-  condition,
-  testimonial,
-  rating,
-}: TestimonialCardProps) => {
+const TestimonialCard = ({ name, location, condition, testimonial, rating, links }: TestimonialCardProps) => {
+  const hasVideo = (links || []).length > 0;
+  const firstLink = (links || [])[0];
   return (
     <div className="bg-card rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-all duration-500 border border-border/50 relative">
       {/* Quote Icon */}
@@ -26,12 +23,7 @@ const TestimonialCard = ({
       {/* Rating */}
       <div className="flex gap-1 mb-4">
         {[...Array(5)].map((_, i) => (
-          <Star
-            key={i}
-            className={`w-5 h-5 ${
-              i < rating ? "text-secondary fill-secondary" : "text-border"
-            }`}
-          />
+          <Star key={i} className={`w-5 h-5 ${i < rating ? "text-secondary fill-secondary" : "text-border"}`} />
         ))}
       </div>
 
@@ -39,19 +31,20 @@ const TestimonialCard = ({
       <p className="text-text mb-6 leading-relaxed">{testimonial}</p>
 
       {/* Condition Badge */}
-      <span className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium mb-4">
-        {condition}
-      </span>
+      <span className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium mb-4">{condition}</span>
 
       {/* Author */}
-      <div className="flex items-center gap-3 pt-4 border-t border-border">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-lg">
-          {name.charAt(0)}
+      <div className="flex items-center justify-between border-t border-border">
+        <div className="flex items-center gap-3 pt-4 ">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-lg">{name.charAt(0)}</div>
+          <div>
+            <p className="font-semibold text-heading">{name}</p>
+            <p className="text-sm text-text">{location}</p>
+          </div>
         </div>
-        <div>
-          <p className="font-semibold text-heading">{name}</p>
-          <p className="text-sm text-text">{location}</p>
-        </div>
+        <a href={firstLink} target="_blank" rel="noreferrer" className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors">
+          <Play className="w-4 h-4 text-primary fill-primary" />
+        </a>
       </div>
     </div>
   );

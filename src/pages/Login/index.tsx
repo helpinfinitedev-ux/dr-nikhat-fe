@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { User, Phone, Lock, Mail, Loader2, Leaf, Eye, EyeOff } from "lucide-react";
+import { Phone, Lock, Loader2, Leaf, Eye, EyeOff } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { toast } from "sonner";
 import { UserService } from "@/services/user.service";
-import RegisterForm from "./Register/components/RegisterForm";
 
-const RegisterPage = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
     mobile: "",
     password: "",
-    confirmPassword: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,40 +25,25 @@ const RegisterPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.mobile || !formData.password) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      toast.error("Password must be at least 6 characters");
+    if (!formData.mobile || !formData.password) {
+      toast.error("Please fill in all fields");
       return;
     }
 
     setLoading(true);
 
     try {
-      const [response] = await UserService.register({
-        name: formData.name,
-        mobile: formData.mobile,
-        email: formData.email,
-        password: formData.password,
-      });
+      const [response] = await UserService.login(formData.mobile, formData.password);
 
       if (response.status === 200) {
         const { token, user } = response.data;
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        toast.success("Account created successfully!");
+        toast.success("Login successful!");
         navigate("/");
       }
     } catch (error: any) {
-      const errorMessage = error.response?.data?.error || "Registration failed. Please try again.";
+      const errorMessage = error.response?.data?.error || "Login failed. Please try again.";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -73,10 +53,10 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <RegisterForm />
+
       <Footer />
     </div>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

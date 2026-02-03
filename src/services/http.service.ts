@@ -5,7 +5,7 @@ const { CancelToken } = axios;
 
 let source = CancelToken.source();
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:5001";
+axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL || "http://localhost:5001";
 
 axios.interceptors.request.use(
   (config) => ({ ...config, cancelToken: source.token }),
@@ -48,7 +48,10 @@ const http = {
   patch: axios.patch,
   delete: axios.delete,
   setJWT: () => {
-    axios.defaults.headers.common.Authorization = localStorage.getItem("adminToken") || "";
+    axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  },
+  setNoCache: () => {
+    axios.defaults.headers.common["Cache-Control"] = "no-cache";
   },
   setMultiPart: () => ({ headers: { "Content-Type": "multipart/form-data" } }),
 };
