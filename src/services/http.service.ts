@@ -14,7 +14,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (res) => {
     const { message } = res.data;
-    toast.success(message || "Fetch successful");
+    // toast.success(message || "Fetch successful");
 
     return res;
   },
