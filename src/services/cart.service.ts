@@ -24,7 +24,7 @@ export const CartService = {
       })
     );
   },
-  clearCart: async (cartId: string) => {
+  clearCart: async () => {
     http.setJWT();
     return await Promisable.asPromise(http.delete(`/api/cart`));
   },
