@@ -35,9 +35,11 @@ const TestimonialCard = ({ testimonial }: { testimonial: CustomerRating }) => {
   return (
     <div className="bg-card rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-500 border border-border/50 flex flex-col h-full">
       {/* Header with avatar and info */}
-      <div className="mb-2 rounded-md w-full h-[300px]">
-        <img src={imageUrl} className="rounded-md w-full h-[300px]" />
-      </div>
+      {imageUrl && (
+        <div className="mb-2 rounded-md w-full h-[300px]">
+          <img src={imageUrl} className="rounded-md w-full h-[300px]" />
+        </div>
+      )}
       <div className="flex items-start gap-4 mb-4">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-lg flex-shrink-0">
           {testimonial.customerName?.charAt(0) || "U"}
