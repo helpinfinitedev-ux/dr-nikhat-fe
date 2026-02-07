@@ -23,8 +23,8 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <UserProvider>
-    {/* <Sonner /> */}
-    {/* <Toaster /> */}
+    <Sonner />
+    <Toaster />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />

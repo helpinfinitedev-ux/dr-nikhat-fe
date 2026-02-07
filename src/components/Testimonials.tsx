@@ -64,6 +64,7 @@ const Testimonials = () => {
                   testimonial={testimonial.description}
                   rating={testimonial.rating}
                   links={testimonial.links}
+                  imageUrl={testimonial.imageUrls?.[0] || ""}
                 />
               </div>
             ))}

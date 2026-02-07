@@ -146,7 +146,7 @@ const ProductsPage = () => {
   const handleOrderSuccess = () => {
     // Clear the cart after successful order
     setCartItems([]);
-    loadCart();
+    // loadCart();
   };
 
   const cartCount = cartItems?.reduce((sum, item) => sum + item.quantity, 0);
@@ -365,7 +365,7 @@ const ProductsPage = () => {
           onClick={() => setIsCartOpen(true)}
           className="fixed top-24 right-6 bg-primary text-white p-4 rounded-full shadow-xl hover:bg-primaryDarkColor transition-all duration-300 z-40">
           <ShoppingCart className="w-6 h-6" />
-          <span className="absolute -top-2 -right-2 bg-secondaryColor text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">{cartCount}</span>
+          <span className="absolute -top-2 -right-2 bg-secondaryColor text-primary text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">{cartCount}</span>
         </button>
       )}
 

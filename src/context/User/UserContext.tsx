@@ -28,7 +28,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
     };
     fetchUser();
-  }, []);
+  }, [triggerUserFetch]);
 
   return <UserContext.Provider value={{ user, setUser, loading, triggerUserFetch, setTriggerUserFetch }}>{children}</UserContext.Provider>;
 };

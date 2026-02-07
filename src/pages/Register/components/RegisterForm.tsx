@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { User, Phone, Lock, Mail, Loader2, Leaf, Eye, EyeOff } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { toast } from "sonner";
 import { UserService } from "@/services/user.service";
+import UserContext from "@/context/User/UserContext";
 
 interface RegisterFormProps {
   embedded?: boolean;
@@ -13,6 +14,7 @@ interface RegisterFormProps {
 
 const RegisterForm = ({ embedded = false, onSuccess }: RegisterFormProps) => {
   const navigate = useNavigate();
+  const { setTriggerUserFetch } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -65,9 +67,11 @@ const RegisterForm = ({ embedded = false, onSuccess }: RegisterFormProps) => {
         localStorage.setItem("user", JSON.stringify(user));
         toast.success("Account created successfully!");
         if (onSuccess) {
+          setTriggerUserFetch(true);
           onSuccess();
         } else {
           navigate("/");
+          setTriggerUserFetch(true);
         }
       }
     } catch (error: any) {

@@ -42,8 +42,8 @@ const BlogDetailPage = () => {
   return (
     <div>
       <Header />
-      <div className="container mx-auto py-8 max-w-[720px] ">
-        <h1 className="text-[72px] px-14 font-bold text-gray-900">{blog?.title}</h1>
+      <div className="container mx-auto py-8 max-w-[920px] ">
+        <h1 className="text-[56px] px-14 font-bold text-gray-900">{blog?.title}</h1>
         <div className="mb-8 ">
           <div className="px-14">
             <div className="flex items-center gap-4">

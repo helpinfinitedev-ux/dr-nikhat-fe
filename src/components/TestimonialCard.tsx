@@ -6,16 +6,19 @@ interface TestimonialCardProps {
   condition: string;
   testimonial: string;
   rating: number;
-  image?: string;
+  imageUrl?: string;
   links?: string[];
 }
 
-const TestimonialCard = ({ name, location, condition, testimonial, rating, links }: TestimonialCardProps) => {
+const TestimonialCard = ({ name, location, imageUrl, condition, testimonial, rating, links }: TestimonialCardProps) => {
   const hasVideo = (links || []).length > 0;
   const firstLink = (links || [])[0];
   return (
     <div className="bg-card rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-all duration-500 border border-border/50 relative">
       {/* Quote Icon */}
+      <div className="mb-2 rounded-md w-full h-[300px]">
+        <img src={imageUrl} className="rounded-md w-full h-full" />
+      </div>
       <div className="absolute -top-4 -right-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center">
         <Quote className="w-6 h-6 text-primary-foreground" />
       </div>
