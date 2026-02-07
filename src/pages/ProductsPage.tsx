@@ -406,7 +406,9 @@ const ProductsPage = () => {
                               <Minus className="w-4 h-4" />
                             </button>
                             <span className="font-medium">{item.quantity}</span>
-                            <button onClick={() => handleUpdateQuantity(item.id, 1)} className="w-8 h-8 rounded-full bg-white border flex items-center justify-center hover:bg-primaryLightColor">
+                            <button
+                              onClick={() => handleUpdateQuantity(item.productId, 1)}
+                              className="w-8 h-8 rounded-full bg-white border flex items-center justify-center hover:bg-primaryLightColor">
                               <Plus className="w-4 h-4" />
                             </button>
                             <button onClick={() => handleRemoveFromCart(item.id, item.productId)} className="ml-auto text-red-500 hover:text-red-600">
