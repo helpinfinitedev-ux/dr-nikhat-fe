@@ -25,7 +25,8 @@ const App = () => (
   <UserProvider>
     <Sonner />
     <Toaster />
-    <BrowserRouter>
+    <h1 className="text-2xl font-bold text-center">Coming soon.</h1>
+    {/* <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<LoginPage />} />
@@ -40,10 +41,9 @@ const App = () => (
         <Route path="/track-order/:orderNumber?" element={<TrackOrderPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:id" element={<BlogDetailPage />} />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter> */}
   </UserProvider>
 );
 
