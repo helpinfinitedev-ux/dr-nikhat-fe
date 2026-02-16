@@ -25,8 +25,8 @@ const App = () => (
   <UserProvider>
     <Sonner />
     <Toaster />
-    <h1 className="text-2xl font-bold text-center">Coming soon.</h1>
-    {/* <BrowserRouter>
+    {/* <h1 className="text-2xl font-bold text-center">Coming soon.</h1> */}
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<LoginPage />} />
@@ -43,7 +43,7 @@ const App = () => (
         <Route path="/blog/:id" element={<BlogDetailPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter> */}
+    </BrowserRouter>
   </UserProvider>
 );
 
