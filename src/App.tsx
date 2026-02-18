@@ -19,33 +19,35 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
 import { UserProvider } from "./context/User/UserContext";
+import { BookAppointmentProvider } from "./context/BookAppointment/BookAppointmentContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <UserProvider>
-    <Sonner />
-    <Toaster />
-    {/* <h1 className="text-2xl font-bold text-center">Coming soon.</h1> */}
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/testimonials" element={<TestimonialsPage />} />
-        <Route path="/testimonial/:id" element={<TestimonialDetailPage />} />
-        <Route path="/book-appointment" element={<BookAppointment />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
-        <Route path="/track-order/:orderNumber?" element={<TrackOrderPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/:id" element={<BlogDetailPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <BookAppointmentProvider>
+      <Sonner />
+      <Toaster />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/testimonials" element={<TestimonialsPage />} />
+          <Route path="/testimonial/:id" element={<TestimonialDetailPage />} />
+          <Route path="/book-appointment" element={<BookAppointment />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
+          <Route path="/track-order/:orderNumber?" element={<TrackOrderPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogDetailPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </BookAppointmentProvider>
   </UserProvider>
 );
 

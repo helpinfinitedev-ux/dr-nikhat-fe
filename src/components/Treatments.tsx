@@ -14,6 +14,7 @@ import {
   Ribbon,
   LucideIcon,
 } from "lucide-react";
+import { useBookAppointment } from "@/context/BookAppointment/BookAppointmentContext";
 
 interface Treatment {
   icon: LucideIcon;
@@ -37,6 +38,8 @@ const treatments: Treatment[] = [
 ];
 
 const Treatments = () => {
+  const { openModal } = useBookAppointment();
+
   return (
     <section id="treatments" className="py-20 lg:py-28 bg-muted/30">
       <div className="container">
@@ -75,9 +78,9 @@ const Treatments = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <a href="https://wa.me/7021804152" target="_blank" rel="noopener noreferrer" className="btn btn-primary inline-flex items-center gap-2">
+          <button onClick={openModal} className="btn btn-primary inline-flex items-center gap-2">
             Consult Now - It's Free!
-          </a>
+          </button>
         </div>
       </div>
     </section>

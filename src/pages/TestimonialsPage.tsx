@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { TestimonialsService } from "@/services/testimonials.service";
+import { useBookAppointment } from "@/context/BookAppointment/BookAppointmentContext";
 
 type CustomerRating = {
   _id?: string;
@@ -24,6 +25,7 @@ const TestimonialsPage = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [testimonials, setTestimonials] = useState<CustomerRating[]>([]);
   const [loading, setLoading] = useState(true);
+  const { openModal } = useBookAppointment();
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -134,10 +136,10 @@ const TestimonialsPage = () => {
             <div className="text-center max-w-2xl mx-auto">
               <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-6">Ready to Start Your Own Journey?</h2>
               <p className="text-primary-foreground/90 text-lg mb-8">Take the first step towards a healthier, more balanced life with personalized homeopathic care.</p>
-              <Link to="/book-appointment" className="btn bg-secondary text-secondary-foreground hover:bg-secondary/90 inline-flex items-center gap-2">
+              <button onClick={openModal} className="btn bg-secondary text-secondary-foreground hover:bg-secondary/90 inline-flex items-center gap-2">
                 Begin Your Healing Journey
                 <ArrowRight className="w-5 h-5" />
-              </Link>
+              </button>
             </div>
           </div>
         </section>

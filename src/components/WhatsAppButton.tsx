@@ -1,13 +1,14 @@
-import { MessageCircle } from "lucide-react";
+import { useBookAppointment } from "@/context/BookAppointment/BookAppointmentContext";
 
 const WhatsAppButton = () => {
+  const { openModal } = useBookAppointment();
+
   return (
-    <a
-      href="https://wa.me/7021804152?text=Hello%20Dr.%20Nikhat,%20I%20would%20like%20to%20book%20a%20consultation."
-      target="_blank"
-      rel="noopener noreferrer"
+    <button
+      onClick={openModal}
       className="fixed bottom-6 right-6 z-50 group"
-      aria-label="Chat on WhatsApp">
+      aria-label="Book Appointment"
+    >
       <div className="relative">
         {/* Pulse animation */}
         <div className="absolute inset-0 bg-whatsapp rounded-full animate-ping opacity-30"></div>
@@ -21,11 +22,11 @@ const WhatsAppButton = () => {
 
         {/* Tooltip */}
         <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-heading text-background px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          Chat with Dr. Nikhat
+          Book Appointment
           <div className="absolute left-full top-1/2 -translate-y-1/2 border-8 border-transparent border-l-heading"></div>
         </div>
       </div>
-    </a>
+    </button>
   );
 };
 

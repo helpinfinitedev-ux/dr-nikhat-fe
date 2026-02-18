@@ -1,6 +1,9 @@
-import { ArrowRight, Play, Users, Award, BookOpen, Instagram } from "lucide-react";
+import { ArrowRight, Users, Award, BookOpen, Instagram } from "lucide-react";
+import { useBookAppointment } from "@/context/BookAppointment/BookAppointmentContext";
 
 const Hero = () => {
+  const { openModal } = useBookAppointment();
+
   return (
     <section id="home" className="pt-12 pb-20 lg:pt-20 lg:pb-32 overflow-hidden">
       <div className="container">
@@ -56,10 +59,10 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mt-10 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-              <a href="https://wa.me/7021804152" target="_blank" rel="noopener noreferrer" className="btn btn-primary flex items-center gap-2 group">
+              <button onClick={openModal} className="btn btn-primary flex items-center gap-2 group">
                 Book Free Consultation
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </button>
               <a href="https://www.instagram.com/dr.nikhatchaudhary" target="_blank" rel="noopener noreferrer" className="">
                 <button className="flex items-center gap-3 text-heading font-semibold hover:text-primary transition-colors group">
                   <span className="w-12 h-12 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-primary/30">

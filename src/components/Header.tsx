@@ -1,7 +1,8 @@
 import { useRef, useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Leaf } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import UserContext from "@/context/User/UserContext";
+import { useBookAppointment } from "@/context/BookAppointment/BookAppointmentContext";
 
 const navLinks = [
   { path: "/", display: "Home", isRoute: true },
@@ -17,6 +18,7 @@ const Header = () => {
   const headerRef = useRef<HTMLElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useContext(UserContext);
+  const { openModal } = useBookAppointment();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -96,9 +98,9 @@ const Header = () => {
                 Logout
               </Link>
             )}
-            <Link to="/book-appointment" className="btn h-14 btn-primary flex items-center gap-2">
+            <button onClick={openModal} className="btn h-14 btn-primary flex items-center gap-2">
               Book Appointment
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -136,12 +138,14 @@ const Header = () => {
               <Link to="/login" onClick={() => setIsMenuOpen(false)} className="h-14 border-primary bg-primary text-gray-50 flex items-center justify-center rounded-[48px] w-full text-center block">
                 Login
               </Link>
-              <Link
-                to="/book-appointment"
-                onClick={() => setIsMenuOpen(false)}
-                className=" w-full h-14 border-primary border-solid border-[1px] rounded-[48px] flex items-center justify-center text-center">
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  openModal();
+                }}
+                className="w-full h-14 border-primary border-solid border-[1px] rounded-[48px] flex items-center justify-center text-center">
                 Book Appointment
-              </Link>
+              </button>
             </div>
           </div>
         </div>
