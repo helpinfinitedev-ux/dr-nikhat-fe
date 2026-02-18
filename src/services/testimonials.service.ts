@@ -14,6 +14,9 @@ export const TestimonialsService = {
   getTestimonials: async () => {
     return await Promisable.asPromise(http.get("/api/ratings"));
   },
+  getTestimonialById: async (id: string) => {
+    return await Promisable.asPromise(http.get(`/api/ratings/${id}`));
+  },
   createRating: async (rating: CustomerRating) => {
     return await Promisable.asPromise(http.post("/api/ratings", rating));
   },

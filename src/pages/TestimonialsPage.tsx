@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Star, Play, SlidersHorizontal, ArrowRight, Loader2 } from "lucide-react";
+import { Play, ArrowRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,64 +16,8 @@ type CustomerRating = {
   createdAt?: string;
 };
 
-const StarRating = ({ rating }: { rating: number }) => {
-  return (
-    <div className="flex gap-0.5">
-      {[...Array(5)].map((_, i) => (
-        <Star key={i} className={`w-4 h-4 ${i < Math.floor(rating) ? "text-secondary fill-secondary" : i < rating ? "text-secondary fill-secondary/50" : "text-border"}`} />
-      ))}
-    </div>
-  );
-};
-
-const TestimonialCard = ({ testimonial }: { testimonial: CustomerRating }) => {
-  const hasSlider = (testimonial.imageUrls || []).length > 0;
-  const hasVideo = (testimonial.links || []).length > 0;
-  const firstLink = (testimonial.links || [])[0];
-  const imageUrl = testimonial.imageUrls?.[0] || "";
-
-  return (
-    <div className="bg-card rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-500 border border-border/50 flex flex-col h-full">
-      {/* Header with avatar and info */}
-      {imageUrl && (
-        <div className="mb-2 rounded-md w-full h-[300px]">
-          <img src={imageUrl} className="rounded-md w-full h-[300px]" />
-        </div>
-      )}
-      <div className="flex items-start gap-4 mb-4">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-lg flex-shrink-0">
-          {testimonial.customerName?.charAt(0) || "U"}
-        </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-heading truncate">{testimonial.customerName}</h3>
-          <p className="text-sm text-primary font-medium">Treated for: {testimonial.treatment}</p>
-        </div>
-        {hasSlider && (
-          <button className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors">
-            <SlidersHorizontal className="w-4 h-4 text-text" />
-          </button>
-        )}
-        {hasVideo &&
-          (firstLink ? (
-            <a href={firstLink} target="_blank" rel="noreferrer" className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors">
-              <Play className="w-4 h-4 text-primary fill-primary" />
-            </a>
-          ) : (
-            <button className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors">
-              <Play className="w-4 h-4 text-primary fill-primary" />
-            </button>
-          ))}
-      </div>
-
-      {/* Rating */}
-      <div className="mb-4">
-        <StarRating rating={testimonial.rating} />
-      </div>
-
-      {/* Testimonial text */}
-      <p className="text-text leading-relaxed flex-1">"{testimonial.description}"</p>
-    </div>
-  );
+const hasYoutubeLink = (links?: string[]) => {
+  return links?.some((link) => link.includes("youtube.com") || link.includes("youtu.be"));
 };
 
 const TestimonialsPage = () => {
@@ -114,7 +58,7 @@ const TestimonialsPage = () => {
               <h1 className="heading mb-6">
                 Stories from Our <span className="text-primary">Healing Garden</span>
               </h1>
-              <p className="text__para text-lg">Discover how Dr. Nikhat has helped others find their path to wellness. Read their stories and see the transformations.</p>
+              <p className="text__para text-lg">Discover how Dr. Nikhat has helped others find their path to wellness. See their transformations.</p>
             </div>
           </div>
         </section>
@@ -137,7 +81,7 @@ const TestimonialsPage = () => {
           </div>
         </section>
 
-        {/* Testimonials Grid */}
+        {/* Testimonials Grid - Images Only */}
         <section className="py-16 lg:py-20">
           <div className="container">
             {loading ? (
@@ -149,12 +93,36 @@ const TestimonialsPage = () => {
                 <p className="text-text text-lg">No testimonials found.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredTestimonials.map((testimonial, index) => (
-                  <div key={testimonial._id || `${testimonial.customerName}-${index}`} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                    <TestimonialCard testimonial={testimonial} />
-                  </div>
-                ))}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {filteredTestimonials.map((testimonial, index) => {
+                  const imageUrl = testimonial.imageUrls?.[0];
+                  const hasVideo = hasYoutubeLink(testimonial.links);
+
+                  if (!imageUrl || !testimonial._id) return null;
+
+                  return (
+                    <div
+                      key={testimonial._id || `${testimonial.customerName}-${index}`}
+                      className="group bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 animate-fade-in border border-border/50"
+                      style={{ animationDelay: `${index * 0.05}s` }}>
+                      <Link to={`/testimonial/${testimonial._id}`} className="block relative aspect-[4/5] overflow-hidden">
+                        <img src={imageUrl} alt={testimonial.customerName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        {hasVideo && (
+                          <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
+                              <Play className="w-7 h-7 text-primary fill-primary ml-1" />
+                            </div>
+                          </div>
+                        )}
+                      </Link>
+                      <div className="p-4 bg-primary text-white text-center font-bold">
+                        <Link to={`/testimonial/${testimonial._id}`} className=" bg-primary w-full text-center">
+                          Know More
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

@@ -1,6 +1,6 @@
 import { CheckCircle, Award, Users, Clock } from "lucide-react";
 
-const features = ["Personalized Treatment Plans", "No Side Effects", "Root Cause Treatment", "Long-lasting Results", "Safe for All Ages", "WhatsApp Consultations"];
+const features = ["Individualized Treatment", "Safe & Gentle", "Root Cause Healing", "Long-lasting Results", "Evidence-Based Approach", "Compassionate Care"];
 
 const stats = [
   { icon: Users, value: "5000+", label: "Patients Treated" },
@@ -35,7 +35,7 @@ const About = () => {
                 </div>
               </div> */}
 
-              <img src="/products.png" className="h-full w-full rounded-xl" />
+              <img src="/products.png" className="h-full w-full object-cover rounded-xl" />
 
               {/* Experience badge */}
               <div className="absolute -right-4 top-8 bg-background rounded-xl shadow-card p-4 z-20">
@@ -58,14 +58,20 @@ const About = () => {
               Dedicated to Your <span className="text-primary">Health</span> & <span className="text-secondary">Wellness</span>
             </h2>
 
-            <p className="text__para mb-6">
-              Dr. Nikhat Chaudhary is a renowned homeopathic physician with over 15 years of experience in treating complex health conditions. Holding BHMS and MD degrees in Homeopathy, she has
-              transformed thousands of lives through natural healing.
+            <p className="text__para mb-4">
+              Dr. Nikhat Choudhary is a dedicated and research-oriented Homeopathic physician with a deep commitment to ethical and root-cause healing. With a strong academic foundation from CMP
+              Medical College, Mumbai, and advanced training in Clinical Cosmetology, Trichology, Dietetics, and Emergency Medical Services from Hinduja Hospital, she blends classical homeopathy with
+              modern clinical insight.
+            </p>
+
+            <p className="text__para mb-4">
+              Having served as a Physician Investigator and Research Scientist in clinical trials for reputed pharmaceutical companies, Dr. Nikhat brings scientific precision and evidence-based
+              understanding into her practice. She has also been appointed as Chief Medical Officer in the Merchant Navy, reflecting her clinical competence and leadership.
             </p>
 
             <p className="text__para mb-8">
-              Her expertise spans across dermatology, trichology, and surgical alternatives, offering patients a chance to heal without invasive procedures or harmful side effects. Every treatment
-              plan is personalized, addressing the root cause rather than just symptoms.
+              Practicing in Mumbai, she is known for treating every patient with equal compassion — from corporate professionals to underprivileged families — ensuring that quality healthcare is
+              accessible to all.
             </p>
 
             {/* Features Grid */}

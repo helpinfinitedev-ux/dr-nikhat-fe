@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
-import TestimonialCard from "./TestimonialCard";
+import { Loader2, Play } from "lucide-react";
+import { Link } from "react-router-dom";
 import { TestimonialsService } from "@/services/testimonials.service";
 
 type CustomerRating = {
@@ -32,6 +32,10 @@ const Testimonials = () => {
     fetchTestimonials();
   }, []);
 
+  const hasYoutubeLink = (links?: string[]) => {
+    return links?.some((link) => link.includes("youtube.com") || link.includes("youtu.be"));
+  };
+
   return (
     <section id="testimonials" className="py-20 lg:py-28 bg-muted/30">
       <div className="container">
@@ -44,7 +48,7 @@ const Testimonials = () => {
           <p className="text__para">Don't just take our word for it. Hear from patients whose lives have been transformed through natural homeopathic healing.</p>
         </div>
 
-        {/* Testimonials Grid */}
+        {/* Testimonials Grid - Images Only */}
         {loading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -54,30 +58,45 @@ const Testimonials = () => {
             <p className="text-text text-lg">No testimonials available yet.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <div key={testimonial._id || `${testimonial.customerName}-${index}`} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                <TestimonialCard
-                  name={testimonial.customerName}
-                  location="India"
-                  condition={testimonial.treatment}
-                  testimonial={testimonial.description}
-                  rating={testimonial.rating}
-                  links={testimonial.links}
-                  imageUrl={testimonial.imageUrls?.[0] || ""}
-                />
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {testimonials.map((testimonial, index) => {
+              const imageUrl = testimonial.imageUrls?.[0];
+              const hasVideo = hasYoutubeLink(testimonial.links);
+
+              if (!imageUrl || !testimonial._id) return null;
+
+              return (
+                <div
+                  key={testimonial._id || `${testimonial.customerName}-${index}`}
+                  className="group bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 animate-fade-in border border-border/50"
+                  style={{ animationDelay: `${index * 0.05}s` }}>
+                  <Link to={`/testimonial/${testimonial._id}`} className="block relative aspect-[4/5] overflow-hidden">
+                    <img src={imageUrl} alt={testimonial.customerName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    {hasVideo && (
+                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
+                          <Play className="w-7 h-7 text-primary fill-primary ml-1" />
+                        </div>
+                      </div>
+                    )}
+                  </Link>
+                  <div className="p-4 w-full text-white text-center bg-primary">
+                    <Link to={`/testimonial/${testimonial._id}`} className="btn btn-primary w-full text-center">
+                      Know More
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
 
-        {/* Bottom CTA */}
-        {/* <div className="text-center mt-16">
-          <p className="text-text mb-4">Ready to start your healing journey?</p>
-          <a href="https://wa.me/7021804152" target="_blank" rel="noopener noreferrer" className="btn btn-primary inline-flex items-center gap-2">
-            Share Your Story
-          </a>
-        </div> */}
+        {/* View All Link */}
+        <div className="text-center mt-12">
+          <Link to="/testimonials" className="btn btn-outline inline-flex items-center gap-2">
+            View All Testimonials
+          </Link>
+        </div>
       </div>
     </section>
   );

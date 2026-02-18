@@ -1,39 +1,39 @@
-import { Sparkles, Heart, Scissors, BookOpen } from "lucide-react";
-import TreatmentCard from "./TreatmentCard";
+import {
+  Brain,
+  HeartPulse,
+  Wind,
+  Apple,
+  Droplets,
+  Bone,
+  Sparkles,
+  Baby,
+  SmilePlus,
+  Flower2,
+  Heart,
+  Scissors,
+  Ribbon,
+  LucideIcon,
+} from "lucide-react";
 
-const treatments = [
-  {
-    icon: Sparkles,
-    title: "Hair Care",
-    description: "Restore your hair's natural beauty with proven homeopathic treatments for hair fall, dandruff, and premature greying.",
-    features: ["Hair Fall Control", "Dandruff Treatment", "Hair Regrowth", "Scalp Health"],
-    bgColor: "bg-primary/10",
-    iconColor: "text-primary",
-  },
-  {
-    icon: Heart,
-    title: "Skin Care",
-    description: "Achieve radiant, healthy skin naturally. Expert treatment for acne, eczema, psoriasis, and other skin conditions.",
-    features: ["Acne & Pimples", "Eczema & Psoriasis", "Skin Allergies", "Anti-Aging"],
-    bgColor: "bg-secondary/10",
-    iconColor: "text-secondary",
-  },
-  {
-    icon: Scissors,
-    title: "Surgical Cases",
-    description: "Non-invasive homeopathic alternatives for surgical conditions. Avoid surgery with natural healing approaches.",
-    features: ["Piles & Fissures", "Kidney Stones", "Gallbladder Stones", "Cysts & Tumors"],
-    bgColor: "bg-primary/10",
-    iconColor: "text-primary",
-  },
-  {
-    icon: BookOpen,
-    title: "OPD Diaries",
-    description: "Real case studies and success stories from our daily practice. See the transformative power of homeopathy.",
-    features: ["Case Studies", "Before & After", "Patient Journeys", "Treatment Insights"],
-    bgColor: "bg-secondary/10",
-    iconColor: "text-secondary",
-  },
+interface Treatment {
+  icon: LucideIcon;
+  title: string;
+}
+
+const treatments: Treatment[] = [
+  { icon: Brain, title: "Nervous System Disorder" },
+  { icon: HeartPulse, title: "Heart Diseases" },
+  { icon: Wind, title: "Respiratory Diseases" },
+  { icon: Apple, title: "Gastrointestinal Disorder" },
+  { icon: Droplets, title: "Endocrine & Hormonal Disorders" },
+  { icon: Bone, title: "Musculoskeletal Diseases" },
+  { icon: Sparkles, title: "Skin & Hair Disorders" },
+  { icon: Baby, title: "Pediatric Care" },
+  { icon: SmilePlus, title: "Psychosomatic & Emotional Disorders" },
+  { icon: Flower2, title: "Women's Health" },
+  { icon: Heart, title: "Infertility" },
+  { icon: Scissors, title: "Surgical Cases" },
+  { icon: Ribbon, title: "Cancers" },
 ];
 
 const Treatments = () => {
@@ -44,18 +44,33 @@ const Treatments = () => {
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="section__title">Our Specialties</span>
           <h2 className="heading mb-4">
-            Expert <span className="text-primary">Treatment</span> Areas
+            Our Expert <span className="text-primary">Treatment</span> Areas
           </h2>
           <p className="text__para">Comprehensive homeopathic care for a wide range of health conditions. Natural, safe, and effective treatments tailored to your unique needs.</p>
         </div>
 
         {/* Treatment Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {treatments.map((treatment, index) => (
-            <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-              <TreatmentCard {...treatment} />
-            </div>
-          ))}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+          {treatments.map((treatment, index) => {
+            const Icon = treatment.icon;
+            const isEven = index % 2 === 0;
+            return (
+              <div
+                key={index}
+                className="group bg-card rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-500 hover:-translate-y-2 border border-border/50 text-center animate-fade-in"
+                style={{ animationDelay: `${index * 0.05}s` }}
+              >
+                <div
+                  className={`w-14 h-14 ${isEven ? "bg-primary/10" : "bg-secondary/10"} rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
+                >
+                  <Icon className={`w-7 h-7 ${isEven ? "text-primary" : "text-secondary"}`} />
+                </div>
+                <h3 className="text-sm md:text-base font-semibold text-heading group-hover:text-primary transition-colors leading-tight">
+                  {treatment.title}
+                </h3>
+              </div>
+            );
+          })}
         </div>
 
         {/* Bottom CTA */}
