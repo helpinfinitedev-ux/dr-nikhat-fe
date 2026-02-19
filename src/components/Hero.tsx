@@ -91,7 +91,7 @@ const Hero = () => {
                         <img src="/nikhat.png" className="object-cover rounded-full w-40 h-40 md:w-80 md:h-80" />
                       </div>
                       <p className="text-primary font-semibold text-lg">Dr. Nikhat Chaudhary</p>
-                      <p className="text-text text-sm">BHMS, MD (Homeopathy)</p>
+                      <p className="text-text text-sm">BHMS (Homeopathy)</p>
                     </div>
                   </div>
                 </div>
