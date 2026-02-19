@@ -276,7 +276,7 @@ const ProductsPage = () => {
 
                 return (
                   <div key={product.id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                    <Link to={`/products/${product.id}`} className="block">
+                    <div className="block">
                       <div className="relative">
                         {imageUrl ? (
                           <img src={imageUrl} alt={product.name} className="w-full h-[336px] object-cover object-top group-hover:scale-105 transition-transform duration-300" />
@@ -308,7 +308,7 @@ const ProductsPage = () => {
                           {showOriginal && <span className="text-sm text-textColor line-through">₹{originalPrice}</span>}
                         </div>
                       </div>
-                    </Link>
+                    </div>
                     <div className="px-5 pb-5">
                       {isProductInCart(product?.id) && <CartQuantityButton {...getCartItems(product?.id)} />}{" "}
                       {!isProductInCart(product.id) && (
