@@ -17,12 +17,30 @@ type CustomerRating = {
 };
 
 const getYoutubeEmbedUrl = (url: string): string | null => {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  if (match && match[2].length === 11) {
-    return `https://www.youtube.com/embed/${match[2]}`;
+  try {
+    const u = new URL(url);
+
+    // youtu.be/VIDEO_ID
+    if (u.hostname.includes("youtu.be")) {
+      const id = u.pathname.slice(1);
+      if (id) return `https://www.youtube.com/embed/${id}`;
+    }
+
+    // youtube.com/watch?v=VIDEO_ID
+    const vParam = u.searchParams.get("v");
+    if (vParam) return `https://www.youtube.com/embed/${vParam}`;
+
+    // youtube.com/shorts/VIDEO_ID or /embed/VIDEO_ID
+    const parts = u.pathname.split("/").filter(Boolean);
+    const idx = parts.findIndex((p) => p === "shorts" || p === "embed");
+    if (idx !== -1 && parts[idx + 1]) {
+      return `https://www.youtube.com/embed/${parts[idx + 1]}`;
+    }
+
+    return null;
+  } catch {
+    return null;
   }
-  return null;
 };
 
 const TestimonialDetailPage = () => {

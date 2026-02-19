@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart, Plus, Minus, Star, Leaf, Truck, Shield, X, Loader2 } from "lucide-react";
 import Header from "@/components/Header";
@@ -7,8 +7,6 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { toast } from "sonner";
 import { ProductsService } from "@/services/products.service";
 import { CartService } from "@/services/cart.service";
-import RegisterForm from "@/pages/Register/components/RegisterForm";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import UserContext from "@/context/User/UserContext";
 import ConfirmOrderModal from "@/components/confirm-order-modal";
 
@@ -40,10 +38,8 @@ const ProductsPage = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cartLoading, setCartLoading] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isConfirmOrderOpen, setIsConfirmOrderOpen] = useState(false);
-  const { user, setTriggerUserFetch } = useContext(UserContext);
-  const [registerModalProduct, setRegisterModalProduct] = useState<any>(null);
+  const { user } = useContext(UserContext);
   useEffect(() => {
     loadProducts();
     loadCart();
@@ -88,8 +84,8 @@ const ProductsPage = () => {
 
   const handleAddToCart = async (product: any) => {
     if (!localStorage.getItem("token")) {
-      setIsRegisterOpen(true);
-      setRegisterModalProduct(product);
+      navigate("/login");
+      return;
     }
     const [response, error] = await CartService.addToCart(product.id, 1);
     if (error) {
@@ -99,8 +95,6 @@ const ProductsPage = () => {
       toast.success("Added to cart!");
       loadCart();
     }
-    toast.success("Added to cart!");
-    loadCart();
   };
 
   const handleUpdateQuantity = async (productId: string, delta: number) => {
@@ -206,20 +200,6 @@ const ProductsPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
-        <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader></DialogHeader>
-          <RegisterForm
-            embedded
-            onSuccess={async () => {
-              setIsRegisterOpen(false);
-              if (registerModalProduct) {
-                setTriggerUserFetch(true);
-                await handleAddToCart(registerModalProduct);
-              }
-            }}></RegisterForm>
-        </DialogContent>
-      </Dialog>
 
       <ConfirmOrderModal isOpen={isConfirmOrderOpen} onClose={() => setIsConfirmOrderOpen(false)} user={user} cartItems={cartItems} cartTotal={cartTotal} onOrderSuccess={handleOrderSuccess} />
 

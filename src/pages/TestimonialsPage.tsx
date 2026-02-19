@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { TestimonialsService } from "@/services/testimonials.service";
 import { useBookAppointment } from "@/context/BookAppointment/BookAppointmentContext";
+import { YouTubePreview } from "@/components/YouTubePreview";
 
 type CustomerRating = {
   _id?: string;
@@ -19,6 +20,10 @@ type CustomerRating = {
 
 const hasYoutubeLink = (links?: string[]) => {
   return links?.some((link) => link.includes("youtube.com") || link.includes("youtu.be"));
+};
+
+const getYoutubeLink = (links?: string[]) => {
+  return links?.find((link) => link.includes("youtube.com") || link.includes("youtu.be"));
 };
 
 const TestimonialsPage = () => {
@@ -99,8 +104,10 @@ const TestimonialsPage = () => {
                 {filteredTestimonials.map((testimonial, index) => {
                   const imageUrl = testimonial.imageUrls?.[0];
                   const hasVideo = hasYoutubeLink(testimonial.links);
+                  const youtubeLink = getYoutubeLink(testimonial.links);
 
-                  if (!imageUrl || !testimonial._id) return null;
+                  if (!testimonial._id) return null;
+                  if (!imageUrl && !youtubeLink) return null;
 
                   return (
                     <div
@@ -108,7 +115,11 @@ const TestimonialsPage = () => {
                       className="group bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 animate-fade-in border border-border/50"
                       style={{ animationDelay: `${index * 0.05}s` }}>
                       <Link to={`/testimonial/${testimonial._id}`} className="block relative aspect-[4/5] overflow-hidden">
-                        <img src={imageUrl} alt={testimonial.customerName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        {imageUrl ? (
+                          <img src={imageUrl} alt={testimonial.customerName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        ) : youtubeLink ? (
+                          <YouTubePreview url={youtubeLink} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        ) : null}
                         {hasVideo && (
                           <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                             <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">

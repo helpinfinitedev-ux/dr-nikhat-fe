@@ -1,4 +1,5 @@
 import { Star, Quote, Play } from "lucide-react";
+import { YouTubePreview } from "./YouTubePreview";
 
 interface TestimonialCardProps {
   name: string;
@@ -10,17 +11,27 @@ interface TestimonialCardProps {
   links?: string[];
 }
 
+const getYoutubeLink = (links?: string[]) => {
+  return links?.find((link) => link.includes("youtube.com") || link.includes("youtu.be"));
+};
+
 const TestimonialCard = ({ name, location, imageUrl, condition, testimonial, rating, links }: TestimonialCardProps) => {
   const hasVideo = (links || []).length > 0;
   const firstLink = (links || [])[0];
+  const youtubeLink = getYoutubeLink(links);
+
   return (
     <div className="bg-card rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-all duration-500 border border-border/50 relative">
-      {/* Quote Icon */}
-      {imageUrl && (
+      {/* Image or YouTube Preview */}
+      {imageUrl ? (
         <div className="mb-2 rounded-md w-full h-[300px]">
-          <img src={imageUrl} className="rounded-md w-full h-full" />
+          <img src={imageUrl} className="rounded-md w-full h-full object-cover" alt={name} />
         </div>
-      )}
+      ) : youtubeLink ? (
+        <div className="mb-2 rounded-md w-full h-[300px] overflow-hidden">
+          <YouTubePreview url={youtubeLink} className="rounded-md w-full h-full object-cover" />
+        </div>
+      ) : null}
       <div className="absolute -top-4 -right-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center">
         <Quote className="w-6 h-6 text-primary-foreground" />
       </div>
