@@ -31,8 +31,8 @@ const App = () => {
       <BookAppointmentProvider>
         <Sonner />
         <Toaster />
-        <ScrollToTop />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<LoginPage />} />
