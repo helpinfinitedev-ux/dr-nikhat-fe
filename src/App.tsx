@@ -31,7 +31,7 @@ const App = () => {
       <BookAppointmentProvider>
         <Sonner />
         <Toaster />
-        <BrowserRouter>
+        {/* <BrowserRouter>
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
@@ -50,7 +50,7 @@ const App = () => {
             <Route path="/blog/:id" element={<BlogDetailPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
+        </BrowserRouter> */}
       </BookAppointmentProvider>
     </UserProvider>
   );
