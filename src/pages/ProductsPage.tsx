@@ -72,7 +72,6 @@ const ProductsPage = () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const [response, error] = await CartService.getCart();
     if (error) {
-      toast.error("Failed to load cart");
       console.error(error);
     } else {
       setCartItems(response.data?.data);
