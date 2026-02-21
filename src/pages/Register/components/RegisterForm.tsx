@@ -119,20 +119,6 @@ const RegisterForm = ({ embedded = false, onSuccess }: RegisterFormProps) => {
                 </div>
 
                 {/* Email */}
-                <div>
-                  <label className="block text-sm font-medium text-heading mb-2">Email Address</label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                      placeholder="Enter your email (optional)"
-                    />
-                  </div>
-                </div>
 
                 {/* Phone Number */}
                 <div>
