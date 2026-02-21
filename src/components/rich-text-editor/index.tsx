@@ -44,7 +44,6 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
 
   const onEditorChange = async () => {
     const markdown = await editor.blocksToHTMLLossy(editor.document);
-    console.log(markdown);
     onChange(markdown);
   };
 

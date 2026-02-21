@@ -158,7 +158,7 @@ const BlogPage = () => {
                       </div>
                       <span className="font-medium text-headingColor">Dr. Nikhat Chaudhary</span>
                     </div>
-                    <button className="ml-auto flex items-center gap-2 text-primaryColor font-semibold hover:gap-3 transition-all">
+                    <button onClick={() => (window.location.href = `/blog/${featuredPost._id}`)} className="ml-auto flex items-center gap-2 text-primaryColor font-semibold hover:gap-3 transition-all">
                       Read More <ArrowRight className="w-5 h-5" />
                     </button>
                   </div>
@@ -203,7 +203,7 @@ const BlogPage = () => {
                     </div>
                     <h3 className="font-bold text-lg text-headingColor mb-3 line-clamp-2 group-hover:text-primaryColor transition-colors">{post.title}</h3>
                     <p className="text-textColor text-sm mb-4 line-clamp-3">{getExcerpt(post)}</p>
-                    <button onClick={() => navigate(`/blog/${post._id}`)} className="flex items-center gap-2 text-primaryColor font-semibold text-sm hover:gap-3 transition-all">
+                    <button onClick={() => (window.location.href = `/blog/${post._id}`)} className="flex items-center gap-2 text-primaryColor font-semibold text-sm hover:gap-3 transition-all">
                       Read Article <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
